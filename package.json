@@ -1,0 +1,28 @@
+{
+  "name": "express_test",
+  "version": "1.0.0",
+  "description": "Express Test Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node bin/www",
+    "devstart": "nodemon index.js",
+    "serverstart": "DEBUG=express_test:* npm run devstart"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dcq-31/express_test.git"
+  },
+  "author": "Darián Capote Quintana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dcq-31/express_test/issues"
+  },
+  "homepage": "https://github.com/dcq-31/express_test#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
