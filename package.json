@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node bin/www",
     "devstart": "nodemon index.js",
-    "serverstart": "DEBUG=express_test:* npm run devstart"
+    "startserver": "SET DEBUG=express_test:* | npm run devstart"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/dcq-31/express_test#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^6.0.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"

@@ -1,0 +1,21 @@
+PUT /user HTTP/1.1
+Content-Type: application/json
+Host: {{ host }}
+Accept-Language: es
+
+{
+  "name": "DCQ",
+  "money": 100
+}
+
+// Bad Request
+###
+PUT /user HTTP/1.1
+Content-Type: application/json
+Host: {{ host }}
+Accept-Language: es
+
+{
+  "name": "DCQ",
+  "money": 12
+}
