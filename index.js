@@ -1,16 +1,25 @@
 const express = require('express');
 const mongoose = require('mongoose');
+/**
+ * Routes
+ */
 const router_user = require('./routes/user');
+const router_car = require('./routes/car');
+
 const app = express();
 
-// Middleware 
+/**
+ * Middleware
+ */
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Include routes
 app.use(router_user);
+app.use(router_car);
 
-// Conect to mongoDB
+/**
+ * Conect to mongoDB
+ */
 const mongoDB_url = 'mongodb://localhost:27017/admin';
 mongoose.connect(mongoDB_url, { useNewUrlParser: true, useUnifiedTopology: true });
 
