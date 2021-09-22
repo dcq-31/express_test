@@ -2,16 +2,16 @@ import express from 'express';
 
 const router = express.Router();
 
-import { car_list, car_create, car_read, car_update, car_delete } from 'src/controllers/car';
+import { cars_read, car_create, car_read, car_update, car_delete } from 'src/controllers/car';
 
-router.get('/car/list', car_list);
+router.get('/', cars_read);
 
-router.put('/car', car_create);
+router.post('/', ...car_create);
 
-router.get('/car/:id', car_read);
+router.get('/:id', car_read);
 
-router.put('/car', car_update);
+router.put('/:id', car_update);
 
-router.delete('/car/:id', car_delete);
+router.delete('/:id', car_delete);
 
 export default router;
