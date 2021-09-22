@@ -1,0 +1,25 @@
+// Car http request
+// Create car item
+POST /cars HTTP/1.1
+Content-Type: application/json
+Host: {{ host }}
+Accept-Language: es
+
+{
+  "model": "MERCEDEEF",
+  "cost": 1,
+  "qty": 1
+}
+
+// List all cars
+###
+GET /cars HTTP/1.1
+Content-Type: application/json
+Host: {{ host }}
+Accept-Language: es
+
+### 
+GET /cars/1 HTTP/1.1
+Content-Type: application/json
+Host: {{ host }}
+Accept-Language: es
