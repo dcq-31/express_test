@@ -4,8 +4,8 @@ import { checkSchema, validationResult } from 'express-validator';
 import carValidateSchema from 'src/validations/request/carSchema';
 import CarModel from 'src/models/car';
 
-export const cars_read: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
-  CarModel.find({}, (err, cars) => {
+export const cars_read: RequestHandlerParams = (req: Request, res: Response, next: NextFunction) => {
+  CarModel.find().exec((err, cars) => {
     if (err) next(err);
     else res.json(cars);
   })
@@ -27,13 +27,13 @@ export const car_create: RequestHandlerParams[] = [
           })
         }
         else {
-          const car_instance = new CarModel({
-            model: req.body.model, cost: req.body.cost, qty: req.body.qty
+          const carInstance = new CarModel({
+            model: req.body.model, cost: req.body.cost
           });
-          console.log(car_instance);
-          car_instance.save(err => {
+          console.log(carInstance);
+          carInstance.save(err => {
             if (err) res.json({ errors: err });
-            else res.json(car_instance);
+            else res.json(carInstance);
           })
         }
       })

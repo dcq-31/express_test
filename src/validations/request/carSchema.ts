@@ -17,12 +17,5 @@ export default {
       options: { gt: 0 },
       errorMessage: "The car's cost must be a valid number."
     },
-  },
-  qty: {
-    trim: true,
-    isInt: {
-      options: { min: 1 },
-      errorMessage: "The car's qty must be a valid number."
-    },
   }
 } as Schema

@@ -9,8 +9,8 @@ import helmet from "helmet";
 /**
  * Internal Modules
  */
-import router_user from 'src/routes/user';
-import router_car from 'src/routes/car';
+import routerUser from 'src/routes/user';
+import routerCar from 'src/routes/car';
 import connectDB from 'src/services/connectDB';
 
 dotenv.config();
@@ -48,8 +48,8 @@ app.use(express.urlencoded({ extended: false }));
 /**
  * Routes Configuration
  */
-app.use(router_user);
-app.use("/cars", router_car);
+app.use("/users", routerUser);
+app.use("/cars", routerCar);
 
 server.listen(port, () => {
   console.log('Example Express listening on port 3000!');
