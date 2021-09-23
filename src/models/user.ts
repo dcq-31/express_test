@@ -1,17 +1,42 @@
 import { Schema, Model, model } from 'mongoose';
-import { ISchema } from 'src/types';
+import validate from 'mongoose-validator';
+import { User } from 'src/types';
+import { isNumber } from 'src/validations/utils';
 
-const userSchema = new Schema<ISchema.User, Model<ISchema.User>, ISchema.User>({
+/**
+ * User validators
+ */
+const validators = {
+  name: [
+    validate({
+      validator: "isLength",
+      arguments: 1,
+      message: "The user's name must not be empty."
+    }),
+    validate({
+      validator: "isAlpha",
+      message: "The user's name must be composed by letters."
+    })
+  ],
+  money: validate({
+    validator: isNumber({ min: 0 }),
+    message: "The user's money must be a valid number."
+  })
+}
+
+/**
+ * Schema
+ */
+const userSchema = new Schema<User, Model<User>, User>({
   name: {
     type: String,
     required: [true, "The user must have a name."],
-    match: /^[a-zA-Z]+$/i,
-    unique: true
+    validate: validators.name
   },
   money: {
     type: Number,
     default: 0,
-    min: [0, "The user can not have less than zero dolars."]
+    validate: validators.money
   },
   cars: {
     type: [{ type: Schema.Types.ObjectId, ref: 'Car' }],
@@ -19,4 +44,4 @@ const userSchema = new Schema<ISchema.User, Model<ISchema.User>, ISchema.User>({
   }
 });
 
-export default model<ISchema.User>('User', userSchema);
+export default model<User>('User', userSchema);
