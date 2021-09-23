@@ -8,9 +8,9 @@ router.get('/', cars_read);
 
 router.post('/', ...car_create);
 
-router.get('/:id', car_read);
+router.get('/:id', ...car_read);
 
-router.put('/:id', car_update);
+router.put('/:id', ...car_update);
 
 router.delete('/:id', car_delete);
 

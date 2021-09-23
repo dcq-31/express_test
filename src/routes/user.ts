@@ -10,8 +10,8 @@ router.post('/', ...user_create);
 
 router.get('/:id', ...user_read);
 
-router.put('/:id', user_update);
+router.put('/:id', ...user_update);
 
-router.delete('/:id', user_delete);
+router.delete('/:id', ...user_delete);
 
 export default router;
