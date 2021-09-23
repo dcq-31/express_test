@@ -3,7 +3,7 @@ import { RequestHandlerParams } from 'express-serve-static-core';
 import { checkSchema, validationResult } from 'express-validator';
 import carValidateSchema from 'src/validations/request/carSchema';
 import CarModel from 'src/models/car';
-import { checkObjectId } from 'src/middlewares/validators';
+import { checkParams } from 'src/middlewares/validators';
 
 /**
  * Read All Cars
@@ -51,7 +51,7 @@ export const car_create: RequestHandlerParams[] = [
  * Read Car
  */
 export const car_read: RequestHandlerParams[] = [
-  checkObjectId,
+  checkParams,
   (req: Request, res: Response, next: NextFunction) => {
     CarModel.findById(req.params.id).exec((err, car) => {
       if (err) next(err);
@@ -65,9 +65,28 @@ export const car_read: RequestHandlerParams[] = [
 /**
  * Update Car
  */
-export const car_update: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
-  res.send(`Update car with id: ${req.params.id}`);
-}
+export const car_update: RequestHandlerParams[] = [
+  checkSchema(carValidateSchema),
+  checkParams,
+  (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+    }
+    else {
+      const carInstance = new CarModel({
+        _id: req.params.id,
+        model: req.body.model,
+        cost: req.body.cost
+      });
+      CarModel.findByIdAndUpdate(req.params.id, carInstance, { new: true }, (err, car) => {
+        if (err) next(err);
+        else if (!car) res.status(404).json({ errors: [{ msg: "Car not found." }] });
+        else res.json(car);
+      });
+    }
+  }
+];
 
 /**
  * Delete Car
