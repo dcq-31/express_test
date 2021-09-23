@@ -8,7 +8,7 @@ router.get('/', users_read);
 
 router.post('/', ...user_create);
 
-router.get('/:id', user_read);
+router.get('/:id', ...user_read);
 
 router.put('/:id', user_update);
 

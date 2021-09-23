@@ -3,7 +3,11 @@ import { RequestHandlerParams } from 'express-serve-static-core';
 import { checkSchema, validationResult } from 'express-validator';
 import userValidateSchema from 'src/validations/request/userSchema';
 import UserModel from 'src/models/user';
+import { checkObjectId } from 'src/middlewares/validators';
 
+/**
+ * Read All Users
+ */
 export const users_read: RequestHandlerParams = (req: Request, res: Response, next: NextFunction) => {
   UserModel.find().exec((err, users) => {
     if (err) next(err);
@@ -11,7 +15,21 @@ export const users_read: RequestHandlerParams = (req: Request, res: Response, ne
   })
 }
 
+/**
+ * Create User
+ */
 export const user_create: RequestHandlerParams[] = [
+  // Transform cars property in array
+  (req: Request, res: Response, next: NextFunction) => {
+    if (req.body.cars == undefined)
+      req.body.cars = [];
+    else {
+      if (!Array.isArray(req.body.cars)) {
+        req.body.cars = [req.body.cars];
+      }
+    }
+    next();
+  },
   checkSchema(userValidateSchema),
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
@@ -28,12 +46,20 @@ export const user_create: RequestHandlerParams[] = [
         }
         else {
           const userInstance = new UserModel({
-            name: req.body.name, money: req.body.money
+            name: req.body.name, money: req.body.money,
+            cars: req.body.cars
           });
-          console.log(userInstance);
-          userInstance.save(err => {
-            if (err) res.json({ errors: err });
-            else res.json(userInstance);
+          console.log("userInstance", userInstance);
+          userInstance.save(async (err) => {
+            if (err) next(err);
+            else {
+              try {
+                await userInstance.populate('cars');
+                res.json(userInstance);
+              } catch (err) {
+                next(err);
+              }
+            }
           })
         }
       })
@@ -41,17 +67,30 @@ export const user_create: RequestHandlerParams[] = [
   }
 ]
 
-export const user_read: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
-  UserModel.findById(req.params.id, {}, null, (err, user) => {
-    if (err) res.send(err);
-    else res.json(user);
-  })
-}
+/**
+ * Read User
+ */
+export const user_read: RequestHandlerParams[] = [
+  checkObjectId,
+  (req: Request, res: Response, next: NextFunction) => {
+    UserModel.findById(req.params.id).populate('cars').exec((err, user) => {
+      if (err) next(err);
+      else if (!user) res.status(404).json({ errors: [{ msg: "User not found." }] });
+      else res.json(user);
+    })
+  }
+];
 
+/**
+ * Update User
+ */
 export const user_update: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
   res.send(`Update user with id: ${req.params.id}`);
 }
 
+/**
+ * Delete User
+ */
 export const user_delete: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
   res.send(`Delete user with id: ${req.params.id}`);
 }

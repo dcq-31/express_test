@@ -9,7 +9,8 @@ export default {
     },
     isAlpha: {
       errorMessage: "The car's model must be composed by letters.",
-    }
+    },
+    escape: true
   },
   cost: {
     trim: true,
@@ -17,5 +18,6 @@ export default {
       options: { gt: 0 },
       errorMessage: "The car's cost must be a valid number."
     },
+    escape: true
   }
 } as Schema
