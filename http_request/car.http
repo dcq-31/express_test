@@ -6,8 +6,8 @@ Host: {{ host }}
 Accept-Language: es
 
 {
-  "model": "MERCEDEEF",
-  "cost": 1,
+  "model": "YAKARTA",
+  "cost": 11
 }
 
 // List all cars
@@ -17,8 +17,21 @@ Content-Type: application/json
 Host: {{ host }}
 Accept-Language: es
 
+// Get car by id
 ### 
-GET /cars/1 HTTP/1.1
+GET /cars/614c0b16b74b7fbfb5a0e2cf HTTP/1.1
 Content-Type: application/json
 Host: {{ host }}
 Accept-Language: es
+
+// Update car by id
+### 
+PUT /cars/614c0b16b74b7fbfb5a0e2cf HTTP/1.1
+Content-Type: application/json
+Host: {{ host }}
+Accept-Language: es
+
+{
+  "model": "TESLAPRO",
+  "cost": 1000
+}

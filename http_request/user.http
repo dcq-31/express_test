@@ -6,19 +6,44 @@ Host: {{ host }}
 Accept-Language: es
 
 {
-  "name": "acq",
-  "money": 0
+  "name": "Otto",
+  "cars": [
+    "614c0b1db74b7fbfb5a0e2d2",
+    "614bae0d0cd6b6f8eaecf0f6"
+  ]
 }
 
-// List all useers
+// List all users
 ###
 GET /users HTTP/1.1
 Content-Type: application/json
 Host: {{ host }}
 Accept-Language: es
 
+// Get user by id
 ### 
-GET /users/1 HTTP/1.1
+GET /users/614bf15b4a7521e26b66125f HTTP/1.1
+Content-Type: application/json
+Host: {{ host }}
+Accept-Language: es
+
+// Update user
+###
+PUT /users/614bf15b4a7521e26b66125f HTTP/1.1
+Content-Type: application/json
+Host: {{ host }}
+Accept-Language: es
+
+{
+  "name": "ShazamUpdate",
+  "cars": [
+    "614c0b16b74b7fbfb5a0e2cf"
+  ]
+}
+
+// Delete user
+###
+DELETE  /users/614bf15b4a7521e26b66125f HTTP/1.1
 Content-Type: application/json
 Host: {{ host }}
 Accept-Language: es
